@@ -216,6 +216,7 @@ $vocab["none_outstanding"]   = "您没有待批准的预订.";
 // Authentication stuff
 $vocab["accessdenied"]       = "访问被拒绝";
 $vocab["norights"]           = "您无权限访问该页面!";
+$vocab["login_info"]         = "If you would like to book a room, please contact $mrbs_admin at <a href=\"mailto:$mrbs_admin_email\">$mrbs_admin_email</a>.";
 $vocab["please_login"]       = "请登录";
 $vocab["users.name"]         = "姓名";
 $vocab["users.password"]     = "密码";

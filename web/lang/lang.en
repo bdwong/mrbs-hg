@@ -112,7 +112,7 @@ $vocab["skip_conflicts"]     = "Skip past conflicts";
 $vocab["no_mail"]            = "Do not send email";
 $vocab["ctrl_click"]         = "Use Control-Click to select more than one room";
 $vocab["entryid"]            = "Entry ID ";
-$vocab["repeat_id"]          = "Repeat ID "; 
+$vocab["repeat_id"]          = "Repeat ID ";
 $vocab["you_have_not_entered"] = "You have not entered a";
 $vocab["brief_description"]  = "Brief description.";
 $vocab["useful_n-weekly_value"] = "useful repeat frequency.";
@@ -226,6 +226,7 @@ $vocab["none_outstanding"]   = "You have no bookings awaiting approval.";
 // Authentication stuff
 $vocab["accessdenied"]       = "Access Denied";
 $vocab["norights"]           = "You do not have the necessary rights to view this page.";
+$vocab["login_info"]         = "If you would like to book a room, please contact $mrbs_admin at <a href=\"mailto:$mrbs_admin_email\">$mrbs_admin_email</a>.";
 $vocab["please_login"]       = "Please log in";
 $vocab["users.name"]         = "Name";
 $vocab["users.password"]     = "Password";
@@ -524,7 +525,7 @@ $vocab["restore_original"]   = "Restore original";
 $vocab["type."]             = "Please select a type";
 $vocab["type.I"]            = "Internal";
 $vocab["type.E"]            = "External";
- 
+
 // General
 $vocab["fatal_error"]        = "Whoops!  Unfortunately MRBS has encountered a fatal error.  Please consult your system administrator.";
 $vocab["fatal_db_error"]     = "Fatal error: unfortunately the database is not available at the moment.";
