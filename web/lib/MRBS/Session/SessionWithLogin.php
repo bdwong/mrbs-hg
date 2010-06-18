@@ -172,6 +172,10 @@ abstract class SessionWithLogin implements SessionInterface
     $form->addHiddenInputs($hidden_inputs);
 
     // Now for the visible fields
+    $p = new ElementP();
+    $p->setText(\MRBS\get_vocab("login_info"));
+    $form->addElement($p);
+
     if (isset($error))
     {
       $p = new ElementP();
