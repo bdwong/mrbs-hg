@@ -529,6 +529,15 @@ $vocab["extensions"]              = "扩展";
 $vocab["please_contact"]     = "请联系";
 $vocab["for_any_questions"]  = ",关于任何无法在此解决的问题.";
 
+// Language stuff
+$vocab["language"] = "语言：";
+
+// The format for language codes are as follows: "Translated language name - Native language name"
+// Except the current language will just have "Language Name" because both are the same.
+$vocab["en-CA"] = "英语 - English";
+$vocab["zh-TW"] = "中文（繁体） - 中文（繁體）";
+$vocab["zh-CN"] = "中文（简体）";
+
 // Used in import.php
 $vocab["import_icalendar"]            = "导入一个 iCalendar 文件";
 $vocab["area_room_settings"]          = "区域和房间";

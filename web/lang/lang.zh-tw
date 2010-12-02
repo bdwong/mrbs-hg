@@ -205,6 +205,15 @@ $vocab["system"]             = "系統";
 $vocab["please_contact"]     = "請聯絡";
 $vocab["for_any_questions"]  = ",關於任何在這裡找不到答案的問題.";
 
+// Language stuff
+$vocab["language"] = "語言：";
+
+// The format for language codes are as follows: "Translated language name - Native language name"
+// Except the current language will just have "Language Name" because both are the same.
+$vocab["en-CA"] = "英語 - English";
+$vocab["zh-TW"] = "中文（繁體）";
+$vocab["zh-CN"] = "中文（簡體） - 中文（简体）";
+
 // Entry types
 $vocab["type.I"]             = "內部使用";
 $vocab["type.E"]             = "外部使用";

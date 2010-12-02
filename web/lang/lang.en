@@ -552,6 +552,15 @@ $vocab["extensions"]              = "Extensions";
 $vocab["please_contact"]          = "Please contact ";
 $vocab["for_any_questions"]       = "for any questions that aren't answered here.";
 
+// Language stuff
+$vocab["language"] = "Language：";
+
+// The format for language codes are as follows: "Translated language name - Native language name"
+// Except the current language will just have "Language Name" because both are the same.
+$vocab["en-CA"] = "English";
+$vocab["zh-TW"] = "Chinese (Traditional) - 中文（繁體）";
+$vocab["zh-CN"] = "Chinese (Simplified) - 中文（简体）";
+
 // Used in import.php
 $vocab["import_icalendar"]            = "Import an iCalendar file";
 $vocab["area_room_settings"]          = "Areas and rooms";
