@@ -6,13 +6,13 @@ use MRBS\Form\ElementInputDate;
 use MRBS\Form\ElementInputSearch;
 use MRBS\Form\ElementInputSubmit;
 
-  
+
 function print_head($simple=false)
 {
   echo "<head>\n";
-  
+
   echo "<meta charset=\"" . get_charset() . "\">\n";
-  
+
   // Set IE=edge so that IE10 will display MRBS properly, even if compatibility mode is used
   // on the browser.  If we don't do this then MRBS will treat IE10 as an unsupported browser
   // when compatibility mode is turned on, potentially confusing users who may have forgotten
@@ -21,25 +21,25 @@ function print_head($simple=false)
   // conditional comments.  So we have to do it in a <meta> tag, after the conditional comments
   // around the <html> tags.
   echo "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n";
-  
+
   // Improve scaling on mobile devices
   echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n";
-  
+
   if (!$simple)
   {
     // Add the CSRF token so that JavaScript can use it
     echo "<meta name=\"csrf_token\" content=\"" . htmlspecialchars(Form::getToken()) . "\">\n";
   }
-  
+
   echo "<title>" . get_vocab("mrbs") . "</title>\n";
-  
+
   require_once "style.inc";
-  
+
   if (!$simple)
   {
     require_once "js.inc";
   }
-  
+
   echo "</head>\n";
 }
 
@@ -52,7 +52,7 @@ function print_header_site_info()
          $mrbs_company_url,
          $mrbs_company_logo,
          $mrbs_company_more_info;
-  
+
   // Company logo, with a link to the company
   if (!empty($mrbs_company_logo))
   {
@@ -64,7 +64,7 @@ function print_header_site_info()
     // Suppress error messages in case the logo is a URL and allow_url_fopen
     // is not enabled in php.ini
     $logo_size = @getimagesize($mrbs_company_logo);
-    echo '<img src="' . $mrbs_company_logo . '" ' . $logo_size[3] . 
+    echo '<img src="' . $mrbs_company_logo . '" ' . $logo_size[3] .
          ' alt="' . htmlspecialchars($mrbs_company) . '">';
     if (!empty($mrbs_company_url))
     {
@@ -72,7 +72,7 @@ function print_header_site_info()
     }
     echo "</div>\n";
   }
-  
+
   // Company name, any extra company info and MRBS
   echo "<div class=\"company\">\n";
   if (!empty($mrbs_company_url))
@@ -96,36 +96,36 @@ function print_header_site_info()
 function print_goto_date($view, $year, $month, $day, $area, $room)
 {
   $form = new Form();
-  
+
   $form_id = 'form_nav';
-  
+
   $form->setAttributes(array('id'     => $form_id,
                              'method' => 'get',
                              'action' => 'index.php'))
        ->addHiddenInput('view', $view);
-                    
+
   if (isset($area))
   {
     $form->addHiddenInput('area', $area);
   }
-  
+
   if (isset($room))
   {
     $form->addHiddenInput('room', $room);
   }
-  
+
   $input = new ElementInputDate();
   $input->setAttributes(array('name'        => 'page_date',
                               'value'       => format_iso_date($year, $month, $day),
                               'required'    => true,
                               'data-submit' => $form_id));
-  
+
   $form->addElement($input);
-  
+
   $submit = new ElementInputSubmit();
   $submit->setAttribute('value', get_vocab('goto'));
   $form->addElement($submit);
-  
+
   $form->render();
 }
 
@@ -133,26 +133,26 @@ function print_goto_date($view, $year, $month, $day, $area, $room)
 function print_outstanding($query)
 {
   $user = getUserName();
-  
+
   if (!isset($user))
   {
     return;
   }
-  
+
   // Provide a link to the list of bookings awaiting approval
   // (if there are any enabled areas where we require bookings to be approved)
   $approval_somewhere = some_area('approval_enabled', TRUE);
   if ($approval_somewhere && (authGetUserLevel($user) >= 1))
   {
     $n_outstanding = get_entries_n_outstanding($user);
-    
+
     $class = 'notification';
-    
+
     if ($n_outstanding > 0)
     {
       $class .= ' attention';
     }
-    
+
     echo '<a href="pending.php?' . htmlspecialchars($query) . '"' .
          " class=\"$class\"" .
          ' title="' . get_vocab('outstanding', $n_outstanding) .
@@ -164,17 +164,17 @@ function print_outstanding($query)
 function print_menu_items($query)
 {
   global $auth;
-  
+
   $menu_items = array('help'   => 'help.php',
                       'report' => 'report.php',
                       'import' => 'import.php',
                       'rooms'  => 'admin.php');
-                      
+
   if ($auth['type'] == 'db')
-  {               
+  {
     $menu_items['user_list'] = 'edit_users.php';
   }
-  
+
   foreach ($menu_items as $token => $page)
   {
     // Only print menu items for which the user is allowed to access the page
@@ -194,11 +194,11 @@ function print_search($view, $year, $month, $day, $area, $room)
     // Don't show the search box if the user isn't allowed to search
     return;
   }
-  
+
   echo "<div>\n";
-    
+
   $form = new Form();
-  
+
   $form->setAttributes(array('id'     => 'header_search',
                              'method' => 'post',
                              'action' => 'search.php'))
@@ -214,33 +214,45 @@ function print_search($view, $year, $month, $day, $area, $room)
   {
     $form->addHiddenInput('room', $room);
   }
-  
+
   $input = new ElementInputSearch();
-  
+
   $input->setAttributes(array('name'        => 'search_str',
                               'placeholder' => get_vocab('search'),
                               'required'    => true));
-                              
+
   $form->addElement($input);
-  
+
   $submit = new ElementInputSubmit();
   $submit->setAttributes(array('value' => get_vocab('search_button'),
                                'class' => 'js_none'));
   $form->addElement($submit);
-  
+
   $form->render();
-  
+
   echo "</div>\n";
 }
 
 
+function print_language_selector()
+{
+  global $language_select_list;
+
+  if (!empty($language_select_list))
+    {
+      echo "<form action=\"javascript:void()\" method=\"get\" id=\"language_form\"><div>";
+      gen_language_selector("en");
+      echo "</div></form>";
+    }
+}
+
 function print_banner($view, $year, $month, $day, $area, $room, $simple=false)
 {
   echo '<header class="banner' . (($simple) ? ' simple' : '') . "\">\n";
-  
+
   $vars = array('view'  => $view,
                 'page_date' => format_iso_date($year, $month, $day));
-                
+
   if (!empty($area))
   {
     $vars['area'] = $area;
@@ -249,23 +261,23 @@ function print_banner($view, $year, $month, $day, $area, $room, $simple=false)
   {
     $vars['room'] = $room;
   }
-  
+
   $query = http_build_query($vars, '', '&');
-  
+
   print_header_site_info();
-  
-  
-  
+
+
+
   if (!$simple)
   {
     echo "<nav class=\"container\">\n";
-    
+
     echo "<nav>\n";
-    
+
     echo "<nav class=\"menu\">\n";
     print_menu_items($query);
     echo "</nav>\n";
-    
+
     echo "<nav class=\"logon\">\n";
     print_outstanding($query);
     // For session protocols that define their own logon box...
@@ -285,17 +297,18 @@ function print_banner($view, $year, $month, $day, $area, $room, $simple=false)
       }
     }
     echo "</nav>\n";
-    
+
     echo "</nav>\n";
-    
+
     echo "<nav>\n";
     print_goto_date($view, $year, $month, $day, $area, $room);
     print_search($view, $year, $month, $day, $area, $room);
+    print_language_selector();
     echo "</nav>\n";
 
     echo "</nav>\n";
   }
-  
+
   echo "</header>\n";
 }
 
@@ -322,10 +335,10 @@ function print_theme_header($view, $year, $month, $day, $area, $room, $simple=fa
   // Get the form token now, before any headers are sent, in case we are using the 'cookie'
   // session scheme.  Otherwise we won't be able to store the Form token.
   Form::getToken();
-  
+
   $headers = array("Content-Type: text/html; charset=" . get_charset());
   http_headers($headers);
-  
+
   echo DOCTYPE . "\n";;
 
   // We produce two <html> tags: one for versions of IE that we don't support and one for all
@@ -336,7 +349,7 @@ function print_theme_header($view, $year, $month, $day, $area, $room, $simple=fa
   echo "<!--[if (!IE)|(gt IE 9)]><!-->\n";
   echo "<html lang=\"" . htmlspecialchars(get_mrbs_lang()) . "\">\n";
   echo "<!--<![endif]-->\n";
-  
+
   print_head($simple);
 
   $page = this_page(false, '.php');
@@ -351,7 +364,7 @@ function print_theme_header($view, $year, $month, $day, $area, $room, $simple=fa
       'page-date' => format_iso_date($year, $month, $day),
       'is-admin'  => (is_admin()) ? 'true' : 'false'
     );
-    
+
   // We need $timetohighlight for the day and week views
   $timetohighlight = get_form_var('timetohighlight', 'int');
   if (isset($timetohighlight))
@@ -359,7 +372,7 @@ function print_theme_header($view, $year, $month, $day, $area, $room, $simple=fa
     $data['timetohighlight'] = $timetohighlight;
   }
 
-  // Put the filename in as a class to aid styling.   
+  // Put the filename in as a class to aid styling.
   echo '<body class="' . htmlspecialchars($page) . '"';
   foreach ($data as $key => $value)
   {
@@ -369,7 +382,7 @@ function print_theme_header($view, $year, $month, $day, $area, $room, $simple=fa
     }
   }
   echo ">\n";
-   
+
   if (!$simple)
   {
     // Load the init file now so that it gets executed as soon as possible.  We
@@ -377,11 +390,11 @@ function print_theme_header($view, $year, $month, $day, $area, $room, $simple=fa
     // data attributes we have just written.
     echo "<script src=\"js/init.js.php\"></script>\n";
   }
-  
+
   print_unsupported_message();
-  
+
   print_banner($view, $year, $month, $day, $area, $room, $simple);
-  
+
   // This <div> should really be moved out of here so that we can always see
   // the matching closing </div>
   echo "<div class=\"contents\">\n";
