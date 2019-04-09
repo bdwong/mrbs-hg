@@ -250,6 +250,8 @@ function get_mrbs_locale($header=null)
     $locale = convert_to_BCP47($locale);
   }
 
+  // Save the locale in a cookie.
+  setcookie ("mrbs_lang", $locale);
   return $locale;
 }
 

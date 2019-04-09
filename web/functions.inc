@@ -1980,7 +1980,8 @@ function gen_language_selector($current_lang)
   $onChangeString = " onChange=\"location.assign('" . $path . "?"
       . $query_string . "' + '&lang=' + options[selectedIndex].value)\"";
 
-  echo get_vocab('language') . "\n<select name=\"language\""
+  // echo get_vocab('language');
+  echo "\n<select name=\"language\""
       . $onChangeString . ">\n";
 
   foreach($language_select_list as $lang)

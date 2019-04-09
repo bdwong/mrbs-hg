@@ -237,11 +237,17 @@ function print_search($view, $year, $month, $day, $area, $room)
 function print_language_selector()
 {
   global $language_select_list;
+  global $override_locale;
 
   if (!empty($language_select_list))
     {
       echo "<form action=\"javascript:void()\" method=\"get\" id=\"language_form\"><div>";
-      gen_language_selector("en");
+      $current_lang = !empty($override_locale) ? $override_locale :
+                        (!empty($_REQUEST['lang']) ? $_REQUEST['lang'] :
+                          (!empty($_COOKIE['mrbs_lang']) ? $_COOKIE['mrbs_lang'] :
+                          "en"));
+
+      gen_language_selector($current_lang);
       echo "</div></form>";
     }
 }
