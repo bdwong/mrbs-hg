@@ -18,6 +18,11 @@ use MRBS\Form\FieldInputText;
 */
 function print_login_form($action, $target_url, $returl, $error=null, $raw=false)
 {
+  global $mrbs_admin_email;
+  global $mrbs_admin;
+
+  printf(get_vocab("login_info"), $mrbs_admin, rawurlencode($mrbs_admin_email), $mrbs_admin_email);
+
   $form = new Form();
   $form->setAttributes(array('class'  => 'standard',
                              'id'     => 'logon',
@@ -31,10 +36,6 @@ function print_login_form($action, $target_url, $returl, $error=null, $raw=false
   $form->addHiddenInputs($hidden_inputs);
 
   // Now for the visible fields
-  $p = new ElementP();
-  $p->setText(get_vocab("login_info"));
-  $form->addElement($p);
-
   if (isset($error))
   {
     $p = new ElementP();
