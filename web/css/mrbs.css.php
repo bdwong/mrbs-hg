@@ -135,6 +135,10 @@ h2 {
   .minicalendars.formed {
     display: block;
   }
+  /* Reduce table width to accommodate minicalendars. */
+  div.view_container > table.dwm_main {
+    width: 80vw;
+  }
 }
 
 <?php
@@ -580,7 +584,8 @@ div#div_custom_html {
 table.dwm_main {
   float: left;
   clear: both;
-  width: 100%;
+  /* The table should be almost as wide as the viewport. */
+  width: 95vw;
   margin: 1em 0;
   border-spacing: 0;
   border-collapse: separate;
@@ -588,11 +593,16 @@ table.dwm_main {
   border-width: <?php echo $main_table_border_width ?>px;
   border-style: solid;
   border-radius: 5px;
+  /* Allow horizontal scrollbar for table. */
+  display: block;
+  overflow-x: auto;
 }
 
 .dwm_main th, .dwm_main td {
   min-height: <?php echo $main_cell_height ?>;
   line-height: <?php echo $main_cell_height ?>;
+  /* Provide minimum width to show sane word wrapping on extra wide tables */
+  min-width: 50px;
 }
 
 .dwm_main td {
@@ -794,6 +804,8 @@ table.dwm_main {
 .dwm_main th a {
   text-decoration: none;
   font-weight: normal;
+  /* Allow standard word breaks in table header */
+  word-break: normal;
 }
 
 .dwm_main th a:link {
