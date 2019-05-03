@@ -137,7 +137,7 @@ h2 {
   }
   /* Reduce table width to accommodate minicalendars. */
   div.view_container > table.dwm_main {
-    width: 80vw;
+    width: calc(100vw - 260px);
   }
 }
 
@@ -585,7 +585,7 @@ table.dwm_main {
   float: left;
   clear: both;
   /* The table should be almost as wide as the viewport. */
-  width: 95vw;
+  width: calc(100vw - 60px);
   margin: 1em 0;
   border-spacing: 0;
   border-collapse: separate;
