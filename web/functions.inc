@@ -2460,6 +2460,40 @@ function get_server_software()
 }
 
 
+// Language functions
+// Generate language selector.
+function gen_language_selector($current_lang)
+{
+  global $language_select_list;
+  $url = explode("?", $_SERVER["REQUEST_URI"], 2);
+  $path = $url[0];
+
+  // The query string is the old query string minus the lang parameter AND
+  // The new lang parameter, which must be dynamically generated in javascript.
+  unset($_GET['lang']);
+  $query_string = http_build_query($_GET);
+
+  // This is the dynamic addition of the lang parameter.
+  $onChangeString = " onChange=\"location.assign('" . $path . "?"
+      . $query_string . "' + '&lang=' + options[selectedIndex].value)\"";
+
+  // echo get_vocab('language');
+  echo "\n<select name=\"language\""
+      . $onChangeString . ">\n";
+
+  foreach($language_select_list as $lang)
+  {
+    if (strlen($current_lang) == 2)
+      $selected = (strtolower($lang) == substr(strtolower($current_lang), 0, 2));
+    else
+      $selected = (strtolower($lang) == strtolower($current_lang));
+    echo "<option value=\"" . $lang . "\""
+      . ($selected ? " selected" : "")
+      . ">" . htmlspecialchars(get_vocab($lang)) . "</option>\n";
+  }
+  echo "</select>";
+}
+
 
 function get_field_entry_input($params)
 {

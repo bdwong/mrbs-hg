@@ -275,6 +275,24 @@ function print_search($context)
 }
 
 
+function print_language_selector()
+{
+  global $language_select_list;
+  global $override_locale;
+
+  if (!empty($language_select_list))
+    {
+      echo "<form action=\"javascript:void()\" method=\"get\" id=\"language_form\"><div>";
+      $current_lang = !empty($override_locale) ? $override_locale :
+                        (!empty($_REQUEST['lang']) ? $_REQUEST['lang'] :
+                          (!empty($_COOKIE['mrbs_lang']) ? $_COOKIE['mrbs_lang'] :
+                          "en"));
+
+      gen_language_selector($current_lang);
+      echo "</div></form>";
+    }
+}
+
 // Generate the username link, which gives a report on the user's upcoming bookings.
 function print_report_link(User $user)
 {
@@ -436,6 +454,7 @@ function print_banner($context, $simple=false, $omit_login=false)
     echo "<nav>\n";
     print_goto_date($context);
     print_search($context);
+    print_language_selector();
     echo "</nav>\n";
 
     echo "</nav>\n";

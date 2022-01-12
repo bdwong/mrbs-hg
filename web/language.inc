@@ -270,6 +270,12 @@ function get_mrbs_locale($header=null)
   static $locale = null;
   static $have_locale = false;   // $locale could be null, even when we've got it
 
+  // Unset locale if it is dynamic.
+  if (!empty($language_select_list))
+  {
+    $locale = null;
+  }
+
   if (!$have_locale)
   {
     // If we're running from the CLI, use the config setting
@@ -289,6 +295,16 @@ function get_mrbs_locale($header=null)
     {
       $locale = $default_language_tokens;
     }
+    // Use explicitly given language
+    elseif (!empty($_REQUEST['lang']))
+    {
+      $locale = $_REQUEST['lang'];
+    }
+    // Use language from stored cookie
+    elseif (!empty($_COOKIE['mrbs_lang']))
+    {
+      $locale = $_COOKIE['mrbs_lang'];
+    }
     // Otherwise, use the best available language following browser preferences
     elseif (!empty($header))
     {
@@ -304,6 +320,8 @@ function get_mrbs_locale($header=null)
     $locale = convert_to_BCP47($locale);
   }
 
+  // Save the locale in a cookie.
+  setcookie ("mrbs_lang", $locale);
   return $locale;
 }
 
@@ -320,6 +338,12 @@ function get_lang_preferences()
   global $aliased_header;
 
   static $lang_preferences = null;
+
+  // Unset language preferences if it is dynamic.
+  if (!empty($language_select_list))
+  {
+    $lang_preferences = null;
+  }
 
   if (!isset($lang_preferences))
   {
