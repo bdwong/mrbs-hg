@@ -758,6 +758,8 @@ table.dwm_main {
 .dwm_main th, .dwm_main td {
   min-height: <?php echo $main_cell_height ?>;
   line-height: <?php echo $main_cell_height ?>;
+  /* Provide minimum width to show sane word wrapping on extra wide tables */
+  min-width: 65px;
 }
 
 .dwm_main tbody th {
@@ -776,10 +778,12 @@ table.dwm_main {
   border-right: <?php echo $main_table_cell_border_width ?>px solid <?php echo $main_table_body_v_border_color ?>;
 }
 
+/* // Removed due to layout problems
 .series a::before {
-  content: '\0021bb';  /* CLOCKWISE OPEN CIRCLE ARROW */
+  content: '\0021bb';  // CLOCKWISE OPEN CIRCLE ARROW
   margin-right: 0.5em;
 }
+*/
 
 .awaiting_approval a::before {
   content: '?';
@@ -876,11 +880,11 @@ table.dwm_main {
 .dwm_main .booked span.saving {
   display: block;
   height: 100%;
-  width: 100%;
+  width: auto;
   min-height: inherit;
-  word-break: break-all;
-  word-break: break-word; <?php // Better for those browsers, eg webkit, that support it ?>
-  hyphens: auto;
+  word-break: normal;
+  white-space: pre-wrap;
+  hyphens: manual;
 }
 
 .dwm_main .booked a,
