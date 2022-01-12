@@ -2250,6 +2250,14 @@ div#record_nav form:first-child {
 }
 
 
+/* ------------ LANGUAGE SELECTOR ------------------------*/
+
+form#language_form select {
+  max-width: 8rem;
+  font-size-adjust: 0.45;
+}
+
+
 /* ------------ SITE_FAQ ------------------------*/
 
 .help q {
