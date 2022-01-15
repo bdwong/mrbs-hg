@@ -321,7 +321,7 @@ function get_mrbs_locale($header=null)
   }
 
   // Save the locale in a cookie.
-  setcookie ("mrbs_lang", $locale);
+  setcookie ("mrbs_lang", $locale, array('samesite' => 'Lax'));
   return $locale;
 }
 
